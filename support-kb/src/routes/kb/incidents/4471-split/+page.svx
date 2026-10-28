@@ -4,7 +4,7 @@ title: '#4471 · two problems, not one'
 owner: Radosław Sendecki
 status: closed
 reviewed: 2026-10-28
-signature: Radosław Sendecki
+signature: radxhunter
 ---
 
 <script>
