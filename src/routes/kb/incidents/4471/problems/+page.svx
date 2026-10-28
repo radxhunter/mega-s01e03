@@ -1,10 +1,10 @@
 ---
 layout: runbook
 title: '#4471 · two problems, not one'
-owner: Radek Sendecki
+owner: Radosław Sendecki
 status: closed
 reviewed: 2026-10-28
-signature: Radek Sendecki
+signature: Radosław Sendecki
 ---
 
 <script>
