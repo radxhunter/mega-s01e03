@@ -2,14 +2,13 @@
 import { causeOf, uniqueById, type Report, type Tenant } from '#lib/kb/causes';
 
 // causes.ts knows two causes, both a day/month flip. A report the desk read as a one-day move
-// (desk-notes.json) is not a flip: the date lands on the day before or after. It is its own problem,
-// but the desk counts a report where it is filed (by tenant, causes.ts), so it stays counted there too.
-export type Problem = 'parser' | 'hint' | 'one-day' | 'unplaced';
-export const PROBLEMS: readonly Problem[] = ['parser', 'hint', 'one-day', 'unplaced'];
+// (desk-notes.json) is read differently, but the desk counts a report where it is filed (by tenant,
+// causes.ts). So a problem is the filed cause; one-day reads are counted under it and footnoted.
+export type Problem = 'parser' | 'hint' | 'unplaced';
+export const PROBLEMS: readonly Problem[] = ['parser', 'hint', 'unplaced'];
 
-export function problemsOf(r: Report, t: Tenant | undefined, oneDayMove: readonly string[]): Problem[] {
-  const filed: Problem = causeOf(r, t) ?? 'unplaced';
-  return oneDayMove.includes(r.id) ? [filed, 'one-day'] : [filed];
+export function problemOf(r: Report, t: Tenant | undefined): Problem {
+  return causeOf(r, t) ?? 'unplaced';
 }
 
 export type ProblemGroup = {
@@ -20,6 +19,8 @@ export type ProblemGroup = {
   lastSeen: string;
   // Reports in this group that intake tagged as something else.
   mistagged: number;
+  // Reports in this group the desk read as a one-day move.
+  oneDay: number;
 };
 
 export function splitTicket(
@@ -31,7 +32,8 @@ export function splitTicket(
   const merged = uniqueById(all).filter((r) => r.mergedInto === ticket);
   const by = new Map<Problem, Report[]>();
   for (const r of merged) {
-    for (const p of problemsOf(r, tenantOf(r), oneDayMove)) by.set(p, [...(by.get(p) ?? []), r]);
+    const p = problemOf(r, tenantOf(r));
+    by.set(p, [...(by.get(p) ?? []), r]);
   }
   const groups = [...by.entries()]
     .map(([problem, rs]) => {
@@ -42,7 +44,8 @@ export function splitTicket(
         tenants: new Set(rs.map((r) => r.tenant)).size,
         firstSeen: days[0],
         lastSeen: days[days.length - 1],
-        mistagged: problem === 'one-day' ? 0 : rs.filter((r) => r.meta.intakeTag !== problem).length,
+        mistagged: rs.filter((r) => r.meta.intakeTag !== problem).length,
+        oneDay: rs.filter((r) => oneDayMove.includes(r.id)).length,
       };
     })
     .sort((a, b) => b.reports.length - a.reports.length);

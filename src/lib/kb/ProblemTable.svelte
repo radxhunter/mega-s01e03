@@ -5,10 +5,24 @@
   import { tenantOf } from '#lib/kb/locales';
   import type { Report } from '#lib/kb/causes';
 
-  // issues: problem → the ticket filed for it, e.g. { parser: 1 }; repo: where those tickets live.
-  let { ticket, issues = {}, repo = '' }: { ticket: number; issues?: Partial<Record<Problem, number>>; repo?: string } = $props();
+  // issues: problem → the ticket filed for it; outcome: problem → what engineering decided; repo: where the tickets live.
+  // oneDayIssue: the ticket the one-day reads were filed in before they were counted under their cause.
+  let {
+    ticket,
+    issues = {},
+    outcome = {},
+    repo = '',
+    oneDayIssue,
+  }: {
+    ticket: number;
+    issues?: Partial<Record<Problem, number>>;
+    outcome?: Partial<Record<Problem, string>>;
+    repo?: string;
+    oneDayIssue?: number;
+  } = $props();
 
   const split = $derived(splitTicket(reports as Report[], ticket, tenantOf, notes.oneDayMove));
+  const link = (n: number) => `https://github.com/${repo}/issues/${n}`;
 </script>
 
 <p class="sum">
@@ -19,7 +33,7 @@
 
 <table>
   <thead>
-    <tr><th>problem</th><th>reports</th><th>tenants</th><th>seen</th><th>intake tagged otherwise</th><th>ticket</th></tr>
+    <tr><th>problem</th><th>reports</th><th>tenants</th><th>seen</th><th>intake tagged otherwise</th><th>ticket</th><th>outcome</th></tr>
   </thead>
   <tbody>
     {#each split.groups as g (g.problem)}
@@ -29,18 +43,18 @@
         <td>{g.tenants}</td>
         <td>{g.firstSeen} → {g.lastSeen}</td>
         <td>{g.mistagged}</td>
-        <td>
-          {#if issues[g.problem]}
-            <a href="https://github.com/{repo}/issues/{issues[g.problem]}">{repo}#{issues[g.problem]}</a>
-          {:else}—{/if}
-        </td>
+        <td>{#if issues[g.problem]}<a href={link(issues[g.problem]!)}>{repo}#{issues[g.problem]}</a>{:else}—{/if}</td>
+        <td>{outcome[g.problem] ?? '—'}</td>
       </tr>
     {/each}
   </tbody>
 </table>
 
-{#each split.groups.filter((g) => g.problem === 'one-day') as g (g.problem)}
-  <p class="note">The {g.reports.length} <code>one-day</code> reports are also counted where the desk filed them, by tenant: a report is counted where it is filed.</p>
+{#each split.groups.filter((g) => g.oneDay) as g (g.problem)}
+  <p class="note">
+    {g.oneDay} reports read as a one-day move; counted under <code>{g.problem}</code> by tenant{#if oneDayIssue}
+      (<a href={link(oneDayIssue)}>{repo}#{oneDayIssue}</a>, closed as a duplicate){/if}.
+  </p>
 {/each}
 
 <style>
