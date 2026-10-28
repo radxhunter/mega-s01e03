@@ -1,0 +1,52 @@
+---
+layout: runbook
+title: '#4471 · three problems, not one'
+owner: Radek Sendecki
+status: open
+reviewed: 2026-10-28
+signature: Radek Sendecki
+---
+
+<script>
+  import ProblemTable from '#lib/kb/ProblemTable.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+  import Callout from '#lib/kb/Callout.svelte';
+</script>
+
+[#4471](/kb/incidents/4471) was merged on subject lines ([decision 0001](/kb/decisions/0001-dedupe-by-subject))
+and marked known: one issue, one fix queued. Read by tenant, channel and body, the reports hold
+more than one problem. Each one now has its own ticket.
+
+<Callout kind="warn">
+The fix queued for #4471 covers the parser only. The other problems stay open after it ships.
+</Callout>
+
+## What #4471 holds
+
+<ProblemTable ticket={4471} repo="radxhunter/mega-s01e03" issues={{ parser: 1, hint: 2, 'one-day': 3 }} />
+
+Counted from `reports-4471.json` at render time: one id, one report (the export repeats some),
+tenant and channel from the tenant directory, one-day moves from `desk-notes.json`.
+
+## The problems
+
+- **`parser`**: the shared parser reads every date month first, and every tenant writes the day
+  first. 7 April becomes 4 July. Reports come from every channel and every tenant.
+- **`hint`**: booking-v3's form prints `MM/DD/YYYY` under its date field. People type what the hint
+  says, and the form reads it the tenant's way, day first. Only the `form` channel of booking-v3
+  tenants. Fixing the parser does not fix this: the hint is wrong, not the parser.
+- **`one-day`**: the date lands one day before or after, not flipped: "Lisbon got Tuesday, Toronto
+  got Monday", "only June", "the invite arrived before I made the booking". That points at time
+  zones and daylight saving, not at day/month order.
+
+## Why intake missed it
+
+`meta.intakeTag` is a guess from the reporter's browser. The column "intake tagged otherwise" counts
+the reports in each problem that intake filed under another name.
+
+## Lessons
+
+- A subject line says how a report feels, not what broke. Read the tenant and the body before you merge.
+- A ticket marked known can still hold problems nobody has a fix for.
+
+<RenderStamp {signature} />
