@@ -39,6 +39,11 @@
   </tbody>
 </table>
 
+{#each split.groups.filter((g) => g.problem === 'one-day') as g (g.problem)}
+  <p class="note">The {g.reports.length} <code>one-day</code> reports are also counted where the desk filed them, by tenant: a report is counted where it is filed.</p>
+{/each}
+
 <style>
   .sum { font-size: 1.1rem; }
+  .note { color: var(--muted); font-size: 0.85em; }
 </style>
