@@ -6,39 +6,43 @@
 		<link href="../../_app/immutable/chunks/B2Ul7l_u.js" rel="modulepreload">
 		<link href="../../_app/immutable/chunks/BCPXOG7W.js" rel="modulepreload">
 		<link href="../../_app/immutable/chunks/Dh1V97Jm.js" rel="modulepreload">
-		<link href="../../_app/immutable/entry/app.DhVshXyr.js" rel="modulepreload">
+		<link href="../../_app/immutable/entry/app.DAzR_JeD.js" rel="modulepreload">
 		<link href="../../_app/immutable/nodes/0.C9KfiiPz.js" rel="modulepreload">
 		<link href="../../_app/immutable/chunks/DK3Fl9T5.js" rel="modulepreload">
-		<link href="../../_app/immutable/nodes/5.Cst0LZmu.js" rel="modulepreload">
-		<link href="../../_app/immutable/chunks/BoLZxQvC.js" rel="modulepreload">
+		<link href="../../_app/immutable/nodes/5.C9CrrFmz.js" rel="modulepreload">
+		<link href="../../_app/immutable/chunks/CgIoB4O0.js" rel="modulepreload">
 		<link href="../../_app/immutable/chunks/BTPwLomz.js" rel="modulepreload">
-		<link href="../../_app/immutable/chunks/CVBzP17p.js" rel="modulepreload">
+		<link href="../../_app/immutable/chunks/D_eX76ox.js" rel="modulepreload">
 		<link href="../../_app/immutable/chunks/BIy4WKJS.js" rel="modulepreload">
 		<!--e2jw2j--><!----><title>#4471 · two problems, not one · support kb</title>
 		<link href="../../_app/immutable/assets/runbook.COyw0cbZ.css" rel="stylesheet">
 		<link href="../../_app/immutable/assets/Callout.AbLv9dM_.css" rel="stylesheet">
-		<link href="../../_app/immutable/assets/_page.l10rmzXo.css" rel="stylesheet"></head>
+		<link href="../../_app/immutable/assets/CauseTable.DuKfINX_.css" rel="stylesheet">
+		<link href="../../_app/immutable/assets/_page.WePi3wDe.css" rel="stylesheet"></head>
   <body data-sveltekit-preload-data="hover"><div style="display: contents"><!--[--><!--[--><!--[0--><!--[--><!--[--><!--[-1--><!--[--><div class="kb svelte-e2jw2j"><header><a class="crumb svelte-e2jw2j" href="/kb">support desk · kb</a> <h1 class="svelte-e2jw2j">#4471 · two problems, not one</h1> <p class="meta svelte-e2jw2j"><span>owner <b>Radosław Sendecki</b></span> <span class="status closed svelte-e2jw2j">closed</span> <span class="svelte-e2jw2j">reviewed 2026-10-28 · 0 days ago</span></p></header> <!--[-1--><!--]--> <main><p><a href="/kb/incidents/4471">#4471</a> was merged on subject lines (<a href="/kb/decisions/0001-dedupe-by-subject">decision 0001</a>)
 and marked known: one issue, one fix queued. Read by tenant and channel, the reports hold two
-problems with two different outcomes. Each one has its own ticket.</p> <aside class="note svelte-17bri61"><!---->#4471 closed on 5 October. The parser is fixed. The booking-v3 hint is won't fix: the form is retired.<!----></aside><!----> <h2>What #4471 held</h2> <p class="sum svelte-1op6c6"><strong>412</strong> reports merged into #4471 · <strong>2</strong> problems</p> <table><thead><tr><th>problem</th><th>reports</th><th>tenants</th><th>seen</th><th>intake tagged otherwise</th><th>ticket</th><th>outcome</th></tr></thead><tbody><!--[--><tr><td><code>parser</code></td><td><strong>379</strong></td><td>11</td><td>2026-04-01 → 2026-10-04</td><td>23</td><td><!--[0--><a href="https://github.com/radxhunter/mega-s01e03/issues/1">radxhunter/mega-s01e03#1</a><!--]--></td><td>fixed: fix(dates): parse dd/mm for eu locales</td></tr><tr><td><code>hint</code></td><td><strong>33</strong></td><td>3</td><td>2026-04-17 → 2026-09-22</td><td>15</td><td><!--[0--><a href="https://github.com/radxhunter/mega-s01e03/issues/2">radxhunter/mega-s01e03#2</a><!--]--></td><td>won't fix: booking-v3 form retired</td></tr><!--]--></tbody></table> <!--[--><p class="note svelte-1op6c6">5 reports read as a one-day move; counted under <code>parser</code> by tenant<!--[0-->(<a href="https://github.com/radxhunter/mega-s01e03/issues/3">radxhunter/mega-s01e03#3</a>, closed as a duplicate)<!--]-->.</p><!--]--><!----> <p>Counted from <code>reports-4471.json</code> at render time, the way the desk counts: one id, one report (the
-export repeats some), each report where it is filed, by tenant and channel.</p> <h2>The problems</h2> <ul><li><strong><code>parser</code></strong>: the shared parser read every date month first, and every tenant writes the day
-first. 7 April became 4 July. Every channel, every tenant.</li> <li><strong><code>hint</code></strong>: booking-v3’s form printed <code>MM/DD/YYYY</code> under its date field. People typed what the hint
-said, and the form read it the tenant’s way, day first. Only the <code>form</code> channel of booking-v3
-tenants. The parser fix did not touch it; retiring the form ends it.</li></ul> <h2>Why intake missed it</h2> <p><code>meta.intakeTag</code> is a guess from the reporter’s browser. The column “intake tagged otherwise” counts
-the reports in each problem that intake filed under the other name.</p> <h2>Lessons</h2> <ul><li>A subject line says how a report feels, not what broke. Read the tenant and the channel before you merge.</li> <li>One ticket marked known can hold problems with different fixes, and one with no fix at all.</li></ul> <!--[0--><p class="stamp svelte-1280m42">desk ref <b class="svelte-1280m42">DR-FB3T-EQJT</b></p><!--]--><!----><!----></main> <footer class="svelte-e2jw2j">Pages are written by people. Tables and charts are built from data at render time.</footer></div><!--]--><!--]--><!--]--><!----><!--]--><!--]--><!--]--><!----> <!--[-1--><!--]--><!--]-->
+problems with two different outcomes. Each one now has its own ticket.</p> <aside class="note svelte-17bri61"><!---->#4471 closed on 5 October. The parser is fixed. The booking-v3 hint is won't fix: the form is retired.<!----></aside><!----> <h2>What #4471 held</h2> <p class="sum svelte-12oyimm"><strong>412</strong> reports merged into #4471 · <strong>2</strong> causes</p> <table><thead><tr><th>cause</th><th>reports</th><th>tagged as</th><th>tenants</th><th>seen</th><th></th></tr></thead><tbody><!--[--><tr class="svelte-12oyimm"><td class="svelte-12oyimm"><code>parser</code></td><td class="svelte-12oyimm">379</td><td class="tags svelte-12oyimm">parser ×356 · hint ×23</td><td class="svelte-12oyimm">11</td><td class="svelte-12oyimm">2026-04-01 → 2026-10-04</td><td class="svelte-12oyimm">#4471</td></tr><tr class="svelte-12oyimm wrong"><td class="svelte-12oyimm"><code>hint</code></td><td class="svelte-12oyimm">33</td><td class="tags svelte-12oyimm">hint ×18 · parser ×15</td><td class="svelte-12oyimm">3</td><td class="svelte-12oyimm">2026-04-17 → 2026-09-22</td><td class="svelte-12oyimm">not this ticket — no ticket of its own</td></tr><!--]--></tbody></table> <!--[--><!--[0--><p class="note svelte-12oyimm">5 reports read as a one-day move; filed under <code>parser</code> by tenant.</p><!--]--><!--[-1--><!--]--><!--]--><!----> <p>The table counts at render time, the way the desk counts: one id, one report, each report where it
+is filed, by tenant and channel.</p> <h2>The problems</h2> <ul><li><strong><code>parser</code></strong>, <a href="https://github.com/radxhunter/mega-s01e03/issues/1" rel="nofollow">radxhunter/mega-s01e03#1</a>,
+fixed in <code>fix(dates): parse dd/mm for eu locales</code>. The shared parser read every date month first,
+and every tenant writes the day first. 7 April became 4 July. Every channel, every tenant.</li> <li><strong><code>hint</code></strong>, <a href="https://github.com/radxhunter/mega-s01e03/issues/2" rel="nofollow">radxhunter/mega-s01e03#2</a>,
+won’t fix: booking-v3 is retired. Its form printed <code>MM/DD/YYYY</code> under the date field. People typed
+what the hint said, and the form read it the tenant’s way, day first. Only the <code>form</code> channel of
+booking-v3 tenants. The parser fix did not touch it.</li> <li>The reports the desk read as a one-day move are counted under their cause, as the table notes.
+They were filed as <a href="https://github.com/radxhunter/mega-s01e03/issues/3" rel="nofollow">radxhunter/mega-s01e03#3</a> and closed as a duplicate of #1.</li></ul> <h2>Why intake missed it</h2> <p><code>meta.intakeTag</code> is a guess from the reporter’s browser. The “tagged as” column shows how often
+intake filed a report under the other cause.</p> <h2>Lessons</h2> <ul><li>A subject line says how a report feels, not what broke. Read the tenant and the channel before you merge.</li> <li>One ticket marked known can hold problems with different fixes, and one with no fix at all.</li></ul> <!--[0--><p class="stamp svelte-1280m42">desk ref <b class="svelte-1280m42">DR-HZQT-5BK2</b></p><!--]--><!----><!----></main> <footer class="svelte-e2jw2j">Pages are written by people. Tables and charts are built from data at render time.</footer></div><!--]--><!--]--><!--]--><!----><!--]--><!--]--><!--]--><!----> <!--[-1--><!--]--><!--]-->
 			
 			<script>
 				{
-					__sveltekit_95ed5e = {
+					__sveltekit_c704q8 = {
 						base: new URL("../..", location).pathname.slice(0, -1),
-						version: "1793193216234"
+						version: "1793193273994"
 					};
 
 					const element = document.currentScript.parentElement;
 
 					import("../../_app/immutable/entry/start.CH5w6lId.js").then(async (kit) => {
-						kit.init(__sveltekit_95ed5e);
-						const app = await import("../../_app/immutable/entry/app.DhVshXyr.js");
+						kit.init(__sveltekit_c704q8);
+						const app = await import("../../_app/immutable/entry/app.DAzR_JeD.js");
 						kit.start(app, element, {
 							node_ids: [0, 5],
 							data: [null,null],

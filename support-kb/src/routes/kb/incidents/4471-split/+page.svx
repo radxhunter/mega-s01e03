@@ -4,18 +4,18 @@ title: '#4471 · two problems, not one'
 owner: Radosław Sendecki
 status: closed
 reviewed: 2026-10-28
-signature: radxhunter
+signature: Radosław Sendecki
 ---
 
 <script>
-  import ProblemTable from '#lib/kb/ProblemTable.svelte';
+  import CauseTable from '#lib/kb/CauseTable.svelte';
   import RenderStamp from '#lib/kb/RenderStamp.svelte';
   import Callout from '#lib/kb/Callout.svelte';
 </script>
 
 [#4471](/kb/incidents/4471) was merged on subject lines ([decision 0001](/kb/decisions/0001-dedupe-by-subject))
 and marked known: one issue, one fix queued. Read by tenant and channel, the reports hold two
-problems with two different outcomes. Each one has its own ticket.
+problems with two different outcomes. Each one now has its own ticket.
 
 <Callout>
 #4471 closed on 5 October. The parser is fixed. The booking-v3 hint is won't fix: the form is retired.
@@ -23,29 +23,28 @@ problems with two different outcomes. Each one has its own ticket.
 
 ## What #4471 held
 
-<ProblemTable
-  ticket={4471}
-  repo="radxhunter/mega-s01e03"
-  issues={{ parser: 1, hint: 2 }}
-  outcome={{ parser: 'fixed: fix(dates): parse dd/mm for eu locales', hint: "won't fix: booking-v3 form retired" }}
-  oneDayIssue={3}
-/>
+<CauseTable ticket={4471} />
 
-Counted from `reports-4471.json` at render time, the way the desk counts: one id, one report (the
-export repeats some), each report where it is filed, by tenant and channel.
+The table counts at render time, the way the desk counts: one id, one report, each report where it
+is filed, by tenant and channel.
 
 ## The problems
 
-- **`parser`**: the shared parser read every date month first, and every tenant writes the day
-  first. 7 April became 4 July. Every channel, every tenant.
-- **`hint`**: booking-v3's form printed `MM/DD/YYYY` under its date field. People typed what the hint
-  said, and the form read it the tenant's way, day first. Only the `form` channel of booking-v3
-  tenants. The parser fix did not touch it; retiring the form ends it.
+- **`parser`**, [radxhunter/mega-s01e03#1](https://github.com/radxhunter/mega-s01e03/issues/1),
+  fixed in `fix(dates): parse dd/mm for eu locales`. The shared parser read every date month first,
+  and every tenant writes the day first. 7 April became 4 July. Every channel, every tenant.
+- **`hint`**, [radxhunter/mega-s01e03#2](https://github.com/radxhunter/mega-s01e03/issues/2),
+  won't fix: booking-v3 is retired. Its form printed `MM/DD/YYYY` under the date field. People typed
+  what the hint said, and the form read it the tenant's way, day first. Only the `form` channel of
+  booking-v3 tenants. The parser fix did not touch it.
+- The reports the desk read as a one-day move are counted under their cause, as the table notes.
+  They were filed as [radxhunter/mega-s01e03#3](https://github.com/radxhunter/mega-s01e03/issues/3)
+  and closed as a duplicate of #1.
 
 ## Why intake missed it
 
-`meta.intakeTag` is a guess from the reporter's browser. The column "intake tagged otherwise" counts
-the reports in each problem that intake filed under the other name.
+`meta.intakeTag` is a guess from the reporter's browser. The "tagged as" column shows how often
+intake filed a report under the other cause.
 
 ## Lessons
 
